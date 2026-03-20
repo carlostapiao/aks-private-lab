@@ -39,4 +39,14 @@ jobs:
         az aks command invoke \
           --resource-group rg-k8s-lab \
           --name aks-lab \
-          --command "kubectl apply -f k8s/"
+          --command "kubectl apply -f k8s/app1-deployment.yaml"
+
+        az aks command invoke \
+          --resource-group rg-k8s-lab \
+          --name aks-lab \
+          --command "kubectl apply -f k8s/app1-service.yaml"
+
+        az aks command invoke \
+          --resource-group rg-k8s-lab \
+          --name aks-lab \
+          --command "kubectl apply -f k8s/ingress.yaml"
