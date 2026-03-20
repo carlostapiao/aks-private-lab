@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      containers:
+      - name: app2
+        image: carlos69lamejor.azurecr.io/app2:v1
+        env:
+        - name: SQL_SERVER
+          value: "${azurerm_sql_server.sql_server.fully_qualified_domain_name}"
+        - name: SQL_DB
+          value: "${azurerm_sql_database.db_app2.name}"
+        ports:
+        - containerPort: 80
