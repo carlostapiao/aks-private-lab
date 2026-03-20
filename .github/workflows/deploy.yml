@@ -1,0 +1,39 @@
+name: Deploy AKS Lab
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Login Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Login ACR
+      run: |
+        az acr login --name carlos69lamejor
+
+    - name: Build image
+      run: |
+        docker build -t carlos69lamejor.azurecr.io/app1:v1 ./app1
+
+    - name: Push image
+      run: |
+        docker push carlos69lamejor.azurecr.io/app1:v1
+
+    - name: Get AKS credentials
+      run: |
+        az aks get-credentials --resource-group rg-k8s-lab --name aks-lab
+
+    - name: Deploy to AKS
+      run: |
+        kubectl apply -f k8s/
