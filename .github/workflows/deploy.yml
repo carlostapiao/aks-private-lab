@@ -50,3 +50,18 @@ jobs:
           --resource-group rg-k8s-lab \
           --name aks-lab \
           --command "kubectl apply -f k8s/ingress.yaml"
+
+    - name: Deploy App2 manifests
+      run: |
+        az aks command invoke \
+          --resource-group rg-k8s-lab \
+          --name aks-lab \
+          --command "kubectl apply -f https://raw.githubusercontent.com/carlostapiao/aks-private-lab/main/k8s/app2-deployment.yaml"
+        az aks command invoke \
+          --resource-group rg-k8s-lab \
+          --name aks-lab \
+          --command "kubectl apply -f https://raw.githubusercontent.com/carlostapiao/aks-private-lab/main/k8s/app2-service.yaml"
+        az aks command invoke \
+          --resource-group rg-k8s-lab \
+          --name aks-lab \
+          --command "kubectl apply -f https://raw.githubusercontent.com/carlostapiao/aks-private-lab/main/k8s/ingress-app2.yaml"
