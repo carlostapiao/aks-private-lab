@@ -36,4 +36,7 @@ jobs:
 
     - name: Deploy to AKS
       run: |
-        kubectl apply -f k8s/
+        az aks command invoke \
+          --resource-group rg-k8s-lab \
+          --name aks-lab \
+          --command "kubectl apply -f k8s/"
